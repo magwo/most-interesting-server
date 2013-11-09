@@ -13,9 +13,12 @@ var nouns = [
     "journaling file system",
     "external traffic router",
     "packet transporter",
-    "parsing subsystem",
+    "parser subsystem",
+    "daemon monitor",
+    "process tasker",
     "all devices",
     "all modules",
+    "thread decoupler",
 ];
 
 var failed_pre = [
@@ -23,6 +26,7 @@ var failed_pre = [
     "got STOP signal when",
     "could not read settings while",
     "unable to access configuration for",
+    "encountered a configuration error when",
 ];
 
 var actions = [
@@ -39,6 +43,8 @@ var actions = [
 ];
 
 var comments = [
+    "[REGISTERED]",
+    "[JOURNALED]",
     "[UNJOURNALED]",
     "[NOT CONFIGURED]",
     "[OK]",
@@ -68,6 +74,8 @@ var classes = [
 ];
 
 
+var delayFactor = 1.0;
+
 function pickOne(arr, forbidden) {
     var item = arr[Math.floor(Math.random()*arr.length)];
     if(item == forbidden) {
@@ -93,11 +101,11 @@ function padToLength(str, character, length) {
 function getRandomLine() {
     var firstNoun = pickOne(nouns);
     var text = capitalize(firstNoun);
-    if(Math.random() > 0.9) {
+    if(Math.random() > 0.85) {
         text += " " + pickOne(failed_pre);
     }
     text += " " + pickOne(actions);
-    if(Math.random() > 0.5) {
+    if(Math.random() > 0.4) {
         text += " " + pickOne(nouns, firstNoun);
     }
     if(Math.random() > 0.95) {
@@ -111,7 +119,7 @@ function addLine(text) {
     var newElem = $("<p></p>");
     var textElem = $("<span> " + text + "</span>");
     textElem.addClass(pickOne(classes));
-    newElem.append("<span class='timestamp'>[" + moment().format("HH:mm:ss") + " (UTC " + moment.utc().format("HH:mm") + "]</span>");
+    newElem.append("<span class='timestamp'>[" + moment().format("HH:mm:ss") + " (UTC " + moment.utc().format("HH:mm") + ")]</span>");
     newElem.append(textElem);
     $("#body_console").append(newElem);
 }
@@ -121,7 +129,7 @@ function cullOldEntries() {
     var consoleHeight = $("#body_console").innerHeight();
     var lineHeight = $("#body_console p").first().height();
     var removalCounter = 0;
-    $("#body_console p").each(function() {
+    $("#body_console p").slice(-3).each(function() {
         if($(this).position().top + lineHeight > consoleHeight) {
             removalCounter++;
         }
@@ -129,17 +137,16 @@ function cullOldEntries() {
     $("#body_console p").slice(0, removalCounter).remove();
 }
 
-var shouldPlay = true;
+
 var currentTimeoutId = undefined;
 function doStuff() {
-    if(shouldPlay) {
-        var delay = 30 + 2400 * Math.random() * Math.random() * Math.random() * Math.random();
-        currentTimeoutId = setTimeout(function() {
-            addLine(getRandomLine());
-            cullOldEntries();
-            doStuff();
-        }, delay);
-    }
+    var delay = 5 + 2600 * Math.random() * Math.random() * Math.random() * Math.random();
+    delay *= delayFactor;
+    currentTimeoutId = setTimeout(function() {
+        addLine(getRandomLine());
+        cullOldEntries();
+        doStuff();
+    }, delay);
 }
 
 // When ready, go go go
@@ -149,15 +156,20 @@ $(function() {
     }
     doStuff();
 
-    $("#controls #play_pause").click(function () {
-        if(shouldPlay) {
-            if(typeof currentTimeoutId != "undefined") {
-                clearTimeout(currentTimeoutId);
-                currentTimeoutId = undefined;
-            }
-            shouldPlay = false;
+    $("#controls #turbo").click(function() {
+        if(delayFactor < 1.0) {
+            delayFactor = 1.0;
         } else {
-            shouldPlay = true;
+            delayFactor = 0.001;
+        }
+    });
+
+    $("#controls #play_pause").click(function () {
+        if(typeof currentTimeoutId != "undefined") {
+            clearTimeout(currentTimeoutId);
+            currentTimeoutId = undefined;
+        }
+        else {
             doStuff();
         }
     });
