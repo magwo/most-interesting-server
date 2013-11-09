@@ -7,3 +7,5 @@ Grab your beard and head over to the [interesting server demo](http://magwo.gith
 
 
 ![Screenshot of most interesting server on the web](/screenshot.png "Screenshot")
+
+Demo with [controls/metrics](http://magwo.github.io/most-interesting-server/index.html)
