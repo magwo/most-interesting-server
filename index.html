@@ -1,13 +1,21 @@
 <!DOCTYPE html>
 <!-- Copyright Magnus Wolffelt 2013 -->
 <head>
+    <title>Most interesting server</title>
     <style>
 
-        html, body, div, p, #body_console_wrapper {
+        html, body, #body_console_wrapper {
             margin: 0;
             padding: 0;
             font-family: Menlo, Consolas, Monaco, "Lucida Console", monospace;
             background-color: black;
+            font-size: 13px;
+            zoom: 1;
+        }
+
+        div, p {
+            margin: 0;
+            padding: 0;
         }
 
         #body_console_wrapper {
@@ -27,13 +35,20 @@
             left: 0;
             right: 0;
             margin-left: 5px;
-            margin-bottom: 1px;
         }
 
         #body_console p {
             color: white;
-            font-size: 13px;
             line-height: 13px;
+        }
+
+        .flipY, #body_console, #body_console p {
+            -moz-transform: scaleY(-1); /* Gecko */
+            -o-transform: scaleY(-1); /* Operah */
+            -webkit-transform: scaleY(-1); /* webkit */
+            transform: scaleY(-1); /* standard */
+            filter: FlipV; /* IE 6/7/8 */
+
         }
 
         #body_console .normal {
@@ -51,8 +66,6 @@
         #body_console .debug {
             color: purple;
         }
-        #body_console .timestamp {
-        }
 
         #controls {
             display: none;
@@ -61,6 +74,7 @@
             top: 10px;
             width: 300px;
             height: 100px;
+            color: white;
         }
     </style>
 
@@ -70,7 +84,7 @@
 </head>
 <body>
     <div id="body_console_wrapper">
-        <div id="body_console">
+        <div id="body_console" class="flipY">
             <p>#####################################################</p>
             <p> </p>
             <p># Welcome to the most interesting server on the web</p>
@@ -82,5 +96,6 @@
     <div id="controls">
         <button id="play_pause">Play/pause</button>
         <button id="turbo">Turbo on/off</button>
+        <p id="lps"></p>
     </div>
 </body>

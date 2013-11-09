@@ -119,32 +119,31 @@ function addLine(text) {
     var newElem = $("<p></p>");
     var textElem = $("<span> " + text + "</span>");
     textElem.addClass(pickOne(classes));
-    newElem.append("<span class='timestamp'>[" + moment().format("HH:mm:ss") + " (UTC " + moment.utc().format("HH:mm") + ")]</span>");
+    var serverName = "most-interesting.server"
+    newElem.append("<span>[" + moment().format("HH:mm:ss") + " " + serverName + " (UTC " + moment.utc().format("HH:mm") + ")]</span>");
     newElem.append(textElem);
-    $("#body_console").append(newElem);
+    $("#body_console").prepend(newElem);
 }
 
 
 function cullOldEntries() {
-    var consoleHeight = $("#body_console").innerHeight();
-    var lineHeight = $("#body_console p").first().height();
+    var scrollbackLimit = 150;
     var removalCounter = 0;
-    $("#body_console p").slice(-3).each(function() {
-        if($(this).position().top + lineHeight > consoleHeight) {
-            removalCounter++;
-        }
-    });
-    $("#body_console p").slice(0, removalCounter).remove();
+    $("#body_console p").slice(scrollbackLimit).remove();
 }
 
 
 var currentTimeoutId = undefined;
+var counter = 0;
 function doStuff() {
     var delay = 5 + 2600 * Math.random() * Math.random() * Math.random() * Math.random();
     delay *= delayFactor;
     currentTimeoutId = setTimeout(function() {
         addLine(getRandomLine());
-        cullOldEntries();
+        counter++;
+        if(counter % 100 == 0) {
+            cullOldEntries();
+        }
         doStuff();
     }, delay);
 }
@@ -160,9 +159,20 @@ $(function() {
         if(delayFactor < 1.0) {
             delayFactor = 1.0;
         } else {
-            delayFactor = 0.001;
+            delayFactor = 0.00001;
         }
     });
+
+    var lastLineCount = counter;
+    var lastTime = moment();
+    setInterval(function() {
+        var currentTime = moment();
+        duration = currentTime - lastTime;
+        lps = (counter - lastLineCount) / (duration / 1000.0);
+        $("#controls #lps").text("" + Math.round(lps) + " L/S");
+        lastTime = currentTime;
+        lastLineCount = counter;
+    }, 3000);
 
     $("#controls #play_pause").click(function () {
         if(typeof currentTimeoutId != "undefined") {
