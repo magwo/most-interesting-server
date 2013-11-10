@@ -18,7 +18,7 @@ Q: What is the purpose of this?
 A: Consider it a work of art that goes well with unix beards.
 
 Q: How does one performantly linebreak content bottom-up?  
-A: Good question! As far as I'm aware, current browsers do not support bottoms-up layouts with regards to line breaks (block elements).
+A: Good question! As far as I'm aware, current browsers do not consistently support bottoms-up layouts with regards to line breaks (block elements). Essentially it means that we want a bottom-aligned element that grows in height, and then overflows in the top. It seems hard to properly achieve this behaviour across browsers.
 It is probably possible with flexbox layouts in the latest browser versions.  
-However, bottom-up layout can also be achieved using a CSS flip transform along the Y axis, for both the parent element and the child elements.
-So basically you flip the parent. The whole content is now upside down. Now you flip the individual rows of text, and suddenly the text is displayed correctly, but everything is layed out bottoms-up!
+However, bottom-up layout can be achieved using a CSS flip transform along the Y axis, for both the parent element and the child elements.
+So basically you flip the parent. The whole content is now upside down. Now you flip the individual rows of text, and the text is displayed correctly, but everything is layed out bottoms-up!
