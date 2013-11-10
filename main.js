@@ -98,7 +98,25 @@ function padToLength(str, character, length) {
 }
 
 
-function getRandomLine() {
+function getAsciiArt1() {
+    return "   Here's a koala\n                    |       :     . |\n                    | '  :      '   |\n                    |  .  |   '  |  |\n          .--._ _...:.._ _.--. ,  ' |\n         (  ,  `        `  ,  )   . |\n          '-/              \\-'  |   |\n            |  o   /\\   o  |       :|\n            \\     _\\/_     / :  '   |\n            /'._   ^^   _.;___      |\n          /`    ````````      `\\=   |\n        /`                     /=  .|\n       ;             '--,-----'=    |\n       |                 `\\  |    . |\n       \\                   \\___ :   |\n       /'.                     `\\=  |\n       \\_/`--......_            /=  |\n                   |`-.        /= : |\n                   | : `-.__ /` .   |\n                   |jgs .   ` |    '|\n                   |  .  : `   . |  |".replace(/ /g, "&nbsp").split("\n");
+}
+
+function getAsciiArt2() {
+    return "  The extremely rad unix walrus\n               ___\n            .-9 9 `\\\n          =(:(::)=  ;\n            ||||     \\\n            ||||      `-.\n           ,\\|\\|         `,\n          /                \\\n         ;                  `'---.,\n         |                         `\\\n         ;                     /     |\n         \\                    |      /\n  jgs     )           \\  __,.--\\    /\n       .-' \\,..._\\     \\`   .-'  .-'\n      `-=``       `:    |  /-/-/`\n                    `.__/".replace(/ /g, "&nbsp").split("\n");
+}
+
+function getRandomLines() {
+
+    if(Math.random() < 0.0001) {
+        // Time for a walrus!
+        return getAsciiArt2();
+    }
+    if(Math.random() < 0.001) {
+        // Time for a koala!
+        return getAsciiArt1();
+    }
+
     var firstNoun = pickOne(nouns);
     var text = capitalize(firstNoun);
     if(Math.random() > 0.85) {
@@ -112,23 +130,26 @@ function getRandomLine() {
         text = padToLength(text, ".", 80);
         text += pickOne(comments);
     }
-    return text;
+    return [text];
 }
 
-function addLine(text) {
-    var newElem = $("<p></p>");
-    var textElem = $("<span> " + text + "</span>");
-    textElem.addClass(pickOne(classes));
-    var serverName = "most-interesting.server"
-    newElem.append("<span>[" + moment().format("HH:mm:ss") + " " + serverName + " (UTC " + moment.utc().format("HH:mm") + ")]</span>");
-    newElem.append(textElem);
-    $("#body_console").prepend(newElem);
+function addLines(lines) {
+    var styleClass = lines.length == 1 ? pickOne(classes) : classes[0];
+    $.each(lines, function() {
+        var text = this;
+        var newElem = $("<p></p>");
+        var textElem = $("<span> " + text + "</span>");
+        textElem.addClass(styleClass);
+        var serverName = "mis-01"
+        newElem.append("<span>[" + moment().format("HH:mm:ss") + " " + serverName + " (UTC " + moment.utc().format("HH:mm") + ")]</span>");
+        newElem.append(textElem);
+        $("#body_console").prepend(newElem);
+    });
 }
 
 
 function cullOldEntries() {
-    var scrollbackLimit = 150;
-    var removalCounter = 0;
+    var scrollbackLimit = 250;
     $("#body_console p").slice(scrollbackLimit).remove();
 }
 
@@ -139,9 +160,9 @@ function doStuff() {
     var delay = 5 + 2600 * Math.random() * Math.random() * Math.random() * Math.random();
     delay *= delayFactor;
     currentTimeoutId = setTimeout(function() {
-        addLine(getRandomLine());
+        addLines(getRandomLines());
         counter++;
-        if(counter % 100 == 0) {
+        if(counter % 20 == 0) {
             cullOldEntries();
         }
         doStuff();
