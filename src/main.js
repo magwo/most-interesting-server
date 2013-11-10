@@ -102,9 +102,17 @@ function getAsciiArt1() {
     return "   Here's a koala\n                    |       :     . |\n                    | '  :      '   |\n                    |  .  |   '  |  |\n          .--._ _...:.._ _.--. ,  ' |\n         (  ,  `        `  ,  )   . |\n          '-/              \\-'  |   |\n            |  o   /\\   o  |       :|\n            \\     _\\/_     / :  '   |\n            /'._   ^^   _.;___      |\n          /`    ````````      `\\=   |\n        /`                     /=  .|\n       ;             '--,-----'=    |\n       |                 `\\  |    . |\n       \\                   \\___ :   |\n       /'.                     `\\=  |\n       \\_/`--......_            /=  |\n                   |`-.        /= : |\n                   | : `-.__ /` .   |\n                   |jgs .   ` |    '|\n                   |  .  : `   . |  |".replace(/ /g, "&nbsp").split("\n");
 }
 
+function getAsciiArt2() {
+    return "  The extremely rad unix walrus\n               ___\n            .-9 9 `\\\n          =(:(::)=  ;\n            ||||     \\\n            ||||      `-.\n           ,\\|\\|         `,\n          /                \\\n         ;                  `'---.,\n         |                         `\\\n         ;                     /     |\n         \\                    |      /\n  jgs     )           \\  __,.--\\    /\n       .-' \\,..._\\     \\`   .-'  .-'\n      `-=``       `:    |  /-/-/`\n                    `.__/".replace(/ /g, "&nbsp").split("\n");
+}
+
 function getRandomLines() {
 
-    if(Math.random() > 0.999) {
+    if(Math.random() < 0.0001) {
+        // Time for a walrus!
+        return getAsciiArt2();
+    }
+    if(Math.random() < 0.001) {
         // Time for a koala!
         return getAsciiArt1();
     }
