@@ -1,0 +1,39 @@
+
+
+@-webkit-keyframes animatedBackground {
+    from { background-position: 0 0; }
+    to { background-position: 100% -300%; }
+}
+
+
+
+
+body.theme_elysium {
+    font-size: 20px;
+    line-height: 20px;
+    color: #FF7D40;
+
+    /*text-shadow: 0 0 8px rgba(255, 102, 51, 0.4);*/
+
+    background-image: url(earth.jpg);
+    background-repeat: repeat;
+    background-size: 200%;
+    -webkit-animation: animatedBackground 220s linear infinite alternate;
+}
+
+body.theme_elysium #body_console_wrapper {
+    background-image: url(clouds.png);
+    background-size: 300%;
+    background-repeat: repeat;
+    -webkit-animation: animatedBackground 60s linear infinite;
+}
+
+
+body.theme_elysium #body_console {
+    
+}
+
+
+#body_console .span {
+    background-color: rgba(0, 0, 0, 0.4);
+}
