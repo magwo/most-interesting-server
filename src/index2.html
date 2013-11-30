@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<!-- Copyright Magnus Wolffelt 2013 -->
+<html ng-app="misApp">
+    <head>
+        <title>Most interesting server, angular version</title>
+        <link rel="stylesheet" type="text/css" href="base.css" />
+        <link rel="stylesheet" type="text/css" href="elysium.css" />
+
+        <script type="text/javascript" src="jquery-1.10.2.min.js"></script>
+        <script type="text/javascript" src="angular.js"></script>
+        <script type="text/javascript" src="moment.js"></script>
+        <script type="text/javascript" src="server.js"></script>
+        <script type="text/javascript" src="main2.js"></script>
+    </head>
+    <body class="theme_default" ng-controller="LinesController">
+        <div id="body_console_wrapper">
+            <div id="body_console" ng-click="showControls = !showControls">
+                <p ng-repeat="line in lines" ng-class="line.class"><span>[{{ line.timestamp | date:'medium' }}] mis-01: </span><span>{{ line.text }}</span></p>
+            </div>
+        </div>
+        <div id="controls" ng-show="showControls">
+            <button ng-click="playToggle()">Play/pause</button>
+            <button ng-click="turboToggle()">Turbo on/off</button>
+            <p id="lps"></p>
+        </div>
+    </body>
+</html>
