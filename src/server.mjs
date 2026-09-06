@@ -1,8 +1,4 @@
-(function() {
-
-var module = window.server = {};
-
-var nouns = [
+const nouns = [
     "remote",
     "expansion module",
     "user",
@@ -24,7 +20,7 @@ var nouns = [
     "thread decoupler",
 ];
 
-var failed_pre = [
+const failed_pre = [
     "crashed while",
     "got STOP signal when",
     "could not read settings while",
@@ -32,7 +28,7 @@ var failed_pre = [
     "encountered a configuration error when",
 ];
 
-var actions = [
+const actions = [
     "rebooting",
     "warming up",
     "initializing",
@@ -45,7 +41,7 @@ var actions = [
     "un-mounting",
 ];
 
-var comments = [
+const comments = [
     "[REGISTERED]",
     "[JOURNALED]",
     "[UNJOURNALED]",
@@ -54,7 +50,7 @@ var comments = [
     "[FAILED]",
 ];
 
-var classes = [
+const classes = [
     "normal",
     "normal",
     "normal",
@@ -106,13 +102,13 @@ function getAsciiArt2() {
     return "  The extremely rad unix walrus\n               ___\n            .-9 9 `\\\n          =(:(::)=  ;\n            ||||     \\\n            ||||      `-.\n           ,\\|\\|         `,\n          /                \\\n         ;                  `'---.,\n         |                         `\\\n         ;                     /     |\n         \\                    |      /\n  jgs     )           \\  __,.--\\    /\n       .-' \\,..._\\     \\`   .-'  .-'\n      `-=``       `:    |  /-/-/`\n                    `.__/".replace(/ /g, "&nbsp").split("\n");
 }
 
-module.getRandomClass = function(lineCount) {
+export function getRandomClass(lineCount) {
     var styleClass = lineCount == 1 ? pickOne(classes) : classes[0];
     return styleClass;
 }
 
 
-module.getRandomLines = function() {
+export function getRandomLines() {
 
     if(Math.random() < 0.0001) {
         // Time for a walrus!
@@ -138,6 +134,3 @@ module.getRandomLines = function() {
     }
     return [text];
 }
-
-
-})();
