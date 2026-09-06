@@ -18,6 +18,26 @@ const nouns = [
     "all devices",
     "all modules",
     "thread decoupler",
+    "kernel",
+    "shell",
+    "init process",
+    "boot loader",
+    "device driver",
+    "block device",
+    "inode table",
+    "swap partition",
+    "system call",
+    "pipe buffer",
+    "socket",
+    "terminal",
+    "cron daemon",
+    "process scheduler",
+    "memory allocator",
+    "loopback interface",
+    "routing table",
+    "permission mask",
+    "shared library",
+    "virtual file system",
 ];
 
 const failed_pre = [
@@ -26,6 +46,11 @@ const failed_pre = [
     "could not read settings while",
     "unable to access configuration for",
     "encountered a configuration error when",
+    "received a fatal signal while",
+    "ran out of memory while",
+    "lost its file descriptor when",
+    "encountered a permission error while",
+    "timed out while",
 ];
 
 const actions = [
@@ -39,6 +64,16 @@ const actions = [
     "caching",
     "re-hashing",
     "un-mounting",
+    "forking",
+    "scheduling",
+    "swapping",
+    "paging",
+    "linking",
+    "compiling",
+    "buffering",
+    "routing",
+    "signaling",
+    "synchronizing",
 ];
 
 const comments = [
@@ -48,6 +83,12 @@ const comments = [
     "[NOT CONFIGURED]",
     "[OK]",
     "[FAILED]",
+    "[MOUNTED]",
+    "[UNMOUNTED]",
+    "[RUNNING]",
+    "[STOPPED]",
+    "[PERMISSION DENIED]",
+    "[CORE DUMPED]",
 ];
 
 const classes = [
