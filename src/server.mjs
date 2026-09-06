@@ -38,6 +38,8 @@ const nouns = [
     "permission mask",
     "shared library",
     "virtual file system",
+    "all cores",
+    "high-performance cores",
 ];
 
 const failed_pre = [
@@ -58,8 +60,6 @@ const actions = [
     "warming up",
     "initializing",
     "reverting",
-    "triangulating",
-    "enhancing",
     "mounting",
     "caching",
     "re-hashing",
@@ -76,7 +76,7 @@ const actions = [
     "synchronizing",
 ];
 
-const comments = [
+export const comments = [
     "[REGISTERED]",
     "[JOURNALED]",
     "[UNJOURNALED]",
@@ -168,10 +168,6 @@ export function getRandomLines() {
     text += " " + pickOne(actions);
     if(Math.random() > 0.4) {
         text += " " + pickOne(nouns, firstNoun);
-    }
-    if(Math.random() > 0.95) {
-        text = padToLength(text, ".", 80);
-        text += pickOne(comments);
     }
     return [text];
 }

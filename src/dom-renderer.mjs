@@ -1,9 +1,10 @@
 import { getRandomClass } from "./server.mjs";
 import { formatLogPrefix } from "./util.mjs";
-import { tick, pause, isRunning } from "./main.mjs";
+import { startServer, pause, isRunning } from "./main.mjs";
 
 var delayFactor = 1.0;
 var counter = 0;
+var lastLineTextElem;
 
 export function addLines(lines) {
     var styleClass = getRandomClass(lines.length);
@@ -19,11 +20,20 @@ export function addLines(lines) {
         newElem.appendChild(timestampElem);
         newElem.appendChild(textElem);
         consoleEl.insertBefore(newElem, consoleEl.firstChild);
+        lastLineTextElem = textElem;
     }
     counter++;
     if(counter % 20 == 0) {
         cullOldEntries();
     }
+}
+
+export function replaceLastLine(text) {
+    if(!lastLineTextElem) {
+        addLines([text]);
+        return;
+    }
+    lastLineTextElem.innerHTML = " " + text;
 }
 
 export function cullOldEntries() {
@@ -67,9 +77,9 @@ document.addEventListener("DOMContentLoaded", function() {
             pause();
         }
         else {
-            tick(addLines, getDelayFactor);
+            startServer(addLines, replaceLastLine, getDelayFactor);
         }
     });
 
-    tick(addLines, getDelayFactor);
+    startServer(addLines, replaceLastLine, getDelayFactor);
 });

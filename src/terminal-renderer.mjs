@@ -1,8 +1,11 @@
 import { formatLogPrefix } from "./util.mjs";
-import { tick } from "./main.mjs";
+import { startServer } from "./main.mjs";
 import { getRandomClass } from "./server.mjs";
 
 var ANSI_RESET = "\x1b[0m";
+var ANSI_REPLACE_LAST_LINE = "\x1b[1A\x1b[2K\r";
+var lastLinePrefix;
+var lastLineStyleClass;
 
 var classColors = {
     normal: "\x1b[37m",
@@ -24,16 +27,32 @@ function colorLineByClass(text, styleClass) {
     return colorLine(text, color);
 }
 
-function addLines(lines) {
+export function addLines(lines) {
     var styleClass = getRandomClass(lines.length);
     for (var i = 0; i < lines.length; i++) {
         var text = lines[i].replace(/&nbsp/g, " ");
-        console.log(formatLogPrefix() + " " + colorLineByClass(text, styleClass));
+        lastLinePrefix = formatLogPrefix();
+        lastLineStyleClass = styleClass;
+        console.log(lastLinePrefix + " " + colorLineByClass(text, styleClass));
     }
+}
+
+export function replaceLastLine(text) {
+    if(typeof lastLinePrefix == "undefined") {
+        addLines([text]);
+        return;
+    }
+    text = text.replace(/&nbsp/g, " ");
+    process.stdout.write(
+        ANSI_REPLACE_LAST_LINE
+        + lastLinePrefix + " "
+        + colorLineByClass(text, lastLineStyleClass)
+        + "\n"
+    );
 }
 
 function getDelayFactor() {
     return 1;
 }
 
-tick(addLines, getDelayFactor);
+startServer(addLines, replaceLastLine, getDelayFactor);
