@@ -2,6 +2,6 @@
   "name": "most-interesting-server",
   "private": true,
   "scripts": {
-    "start": "node src/terminal-renderer.mjs"
+    "start": "node terminal-renderer.mjs"
   }
 }
