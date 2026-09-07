@@ -1,5 +1,4 @@
-most-interesting-server
-=======================
+# most-interesting-server
 
 Get that unix fix right on the web, right in your flipping browser. Even in your phone! Yeah that's right, even in non-unix phones!!
 
@@ -10,9 +9,14 @@ Grab your beard and head over to the [interesting server demo](http://magwo.gith
 
 There's also a [demo with controls/metrics](http://magwo.github.io/most-interesting-server/index.html?controls).
 
+## New features 2026!
 
-FAQ
-=====================
+* Progress bars and spinners, and more!
+* More technical-sounding words (technology moves forward after all)
+* Run in a real terminal emulator with a node runtime: Just run `npm start`, lean back and enjoy that unix feel
+
+
+# FAQ
 
 Q: What is the purpose of this?  
 A: Consider it a work of art that goes well with unix beards.
